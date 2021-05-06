@@ -1,0 +1,89 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+class main {
+   public static Double city() {
+
+    Double tax_rates = 0.0;
+    Scanner city = new Scanner(System.in);
+    String Location = "";
+    while(true){
+        System.out.println("Enter Location:");
+        Location = city.nextLine();
+        if (Location.equals("CA")){
+            tax_rates = 0.0975;
+            break;
+            }
+        else if (Location.equals("NY")){
+            tax_rates = 0.08875;
+            break;
+            }
+        else{
+            System.out.println("Error!Please try again.");
+        }
+    }
+    return (tax_rates);
+ }
+
+ public static void main(String[] args) {
+    Double tax_rates =city();
+    String name;
+    Double price;
+    int qty;
+    Double total = 0.0;
+    Double tax = 0.0;
+    ArrayList<String> names = new ArrayList<String>();
+    ArrayList<Double> prices = new ArrayList<Double>();
+    ArrayList<Integer> qtys = new ArrayList<Integer>();
+    String[] food = {"potatochips"};
+    String[] clothes ={"shirt"};
+    while(true){
+        System.out.println("Enter the item name,price and quantity.");
+        Scanner item = new Scanner(System.in);
+        name = item.nextLine();
+        price = item.nextDouble();
+        qty = item.nextInt();
+        names.add(name);
+        prices.add(price);
+        qtys.add(qty);
+        System.out.println("Do you have other item ?(If not, please input 0.If yes,please input other.)");
+        Scanner choice = new Scanner(System.in);
+        int i = choice.nextInt();
+        if (i == 0){
+            break;
+        }
+    }
+
+    System.out.println("item \t\t price \t\t qty");
+    for(int i = 0; i < names.size();i++){
+    System.out.println(names.get(i) + " \t\t " + prices.get(i) + "\t\t " + qtys.get(i));
+    }
+    for (int i = 0; i < prices.size();i++){
+        total += prices.get(i) * qtys.get(i);
+    }
+    double Total = Math.round(total*100.0)/100.0;
+    System.out.println("subtotal:\t\t\t" + Total);
+    for (int i = 0; i < prices.size();i++){
+        for (int j = 0;j < food.length;j++){
+            if(tax_rates == 0.0975){
+                if(!names.get(i).equals(food[j])){
+                    tax += tax_rates * prices.get(i) * qtys.get(i);
+                }
+            }
+            else if(tax_rates == 0.08875){
+                if(!names.get(i).equals(food[j]) && !names.get(i).equals(clothes[j])){
+                    tax += tax_rates * prices.get(i) * qtys.get(i);
+                }
+            }
+        }
+    }
+
+    double Tax = Math.round(tax*100.0)/100.0;
+    Tax = Math.round(Tax * 20) / 20.0;
+
+    System.out.println("tax:\t\t\t\t" + Tax);
+    Total = Total + Tax;
+    Total = Math.round(Total*100.0)/100.0;
+    System.out.println("total:\t\t\t\t" + Total);
+ }
+
+}
